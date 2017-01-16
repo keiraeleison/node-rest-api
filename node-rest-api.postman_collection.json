@@ -1,0 +1,161 @@
+{
+	"variables": [],
+	"info": {
+		"name": "node-rest-api",
+		"_postman_id": "fb4cfe4a-43ae-c2d3-06fb-6eb5c4703068",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Contacts Request",
+			"request": {
+				"url": "http://localhost:3001/api/contacts",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/contacts/",
+			"request": {
+				"url": "http://localhost:3001/api/contacts/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "John",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "Doe",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "john@doe.com",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "website",
+							"value": "johndoe.com",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API Get Contact By ID",
+			"request": {
+				"url": "http://localhost:3001/api/contacts/6",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API Add New Contact",
+			"request": {
+				"url": "http://localhost:3001/api/contacts/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "John",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "Doe",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "john@doe.com",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "website",
+							"value": "johndoe.com",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API Update Contact By ID",
+			"request": {
+				"url": "http://localhost:3001/api/contacts/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "Jane",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API Delete Contact by ID",
+			"request": {
+				"url": "http://localhost:3001/api/contacts/7",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
