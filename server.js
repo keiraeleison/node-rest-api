@@ -4,7 +4,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser'); // req.body
 const cors = require('cors'); // :8080
+const mongoose = require('mongoose');
+const uriUtil = require('mongodb-uri');
 let contacts = require('./data');
+
+// mLab's free version doesn't provide a Uri that is applicable for Mongoose, 
+// so we have to format is first
+const mongodbUri = 'mongodb://test:test@ds111549.mlab.com:11549/node-rest-api';
+const mongooseUri = uriUtil.formatMongoose(mongodbUri);
+const dbOptions = {}; // must be given, even if it's an empty object
 
 const hostname = 'localhost';
 const port = 3001;
@@ -13,70 +21,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true }) );
 app.use(cors());
 
-app.get('/api/contacts', (req, res) => {
-  if (!contacts) {
-    res.status(404).json({ message: 'No contacts found' });
-  }
-  res.json(contacts);
-});
-
-app.get('/api/contacts/:id', (req, res) => {
-  if (!contacts) {
-    res.status(404).json({ message: 'No contacts found' });
-  }
-  const requestId = req.params.id;
-  let contact = contacts.filter(contact => {
-    return contact.id == requestId;
-  });
-  res.json(contact[0]);
-});
-
-app.post('/api/contacts', (req, res) => {
-  let contact = {
-    id: contacts.length + 1,
-    first_name: req.body.firstname,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    website: req.body.website
-  }
-
-  contacts.push(contact);
-  res.json(contact);
-});
-
-app.put('/api/contacts/:id', (req, res) => {
-  if (!contacts) {
-    res.status(404).json({ message: 'No contacts found' });
-  }
-  const requestId = req.params.id;
-  let contact = contacts.filter(contact => {
-    return contact.id == requestId;
-  })[0];
-
-  const index = contacts.indexOf(contact);
-  const key = Object.keys(req.body);
-  key.forEach(key => {
-    contact[key] = req.body[key];
-  });
-
-  contacts[index] = contact;
-  res.json(contact);
-});
-
-app.delete('/api/contacts/:id', (req, res) => {
-  const requestId = req.params.id;
-
-  let contact = contacts.filter(contact => {
-    return contact.id == requestId;
-  })[0];
-
-  const index = contacts.indexOf(contact);
-
-  contacts.splice(index, 1); // take only 1 position out of the array
-  res.json( {message: `User with ${requestId} has been deleted`} );
-});
-
+app.use('/api/contacts', require('./api/contacts/routes/post_contact'));
+app.use('/api/contacts', require('./api/contacts/routes/get_contacts'));
+app.use('/api/contacts', require('./api/contacts/routes/get_contact'));
+app.use('/api/contacts', require('./api/contacts/routes/delete_contact'));
+app.use('/api/contacts', require('./api/contacts/routes/put_contact'));
 
 app.listen(port, hostname, () => {
-  console.log(`Server us running at http://${hostname}:${port}`);
+  mongoose.connect(mongooseUri, dbOptions, (err) => {
+    if(err) {
+      console.log(err);
+    }
+    console.log(`Server us running at http://${hostname}:${port}`);
+  })
 });
